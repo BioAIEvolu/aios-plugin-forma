@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "kind": "forma-dto-contract",
+  "envelope": {
+    "request": { "type": "object", "required": ["protocol", "tool", "arguments"] },
+    "response": { "type": "object", "required": ["protocol", "ok"] }
+  },
+  "identifiers": ["run_id", "source_id", "catalog_hash", "selection_digest", "plan_digest", "artifact_digest"],
+  "limits": { "request_bytes": 1048576, "response_bytes": 4194304, "path_bytes": 1024 }
+}

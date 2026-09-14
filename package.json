@@ -1,0 +1,84 @@
+{
+  "name": "aios-plugin-forma",
+  "version": "0.1.0",
+  "description": "Self-contained Forma self-building bundle for local DSH profiles",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YOUR-GITHUB-USERNAME/aios-plugin-forma.git"
+  },
+  "homepage": "https://github.com/YOUR-GITHUB-USERNAME/aios-plugin-forma#readme",
+  "bugs": {
+    "url": "https://github.com/YOUR-GITHUB-USERNAME/aios-plugin-forma/issues"
+  },
+  "type": "module",
+  "main": "./host.mjs",
+  "bin": {
+    "aios-plugin-forma": "./bin/aios-plugin-forma.mjs"
+  },
+  "exports": {
+    ".": "./host.mjs",
+    "./host.mjs": "./host.mjs",
+    "./worker.mjs": "./worker.mjs",
+    "./supervisor.mjs": "./supervisor.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "host.mjs",
+    "worker.mjs",
+    "supervisor.mjs",
+    "core/lib/candidate.mjs",
+    "core/lib/catalog.mjs",
+    "core/lib/coordinator.mjs",
+    "core/lib/license.mjs",
+    "core/lib/permissions.mjs",
+    "core/lib/plan.mjs",
+    "core/lib/profile.mjs",
+    "core/lib/records.mjs",
+    "core/lib/repo-source.mjs",
+    "core/lib/selection.mjs",
+    "core/lib/submissions.mjs",
+    "core/lib/transformation.mjs",
+    "core/lib/validation.mjs",
+    "core/runtime/host-repo-worker.mjs",
+    "core/runtime/repo-supervisor.mjs",
+    "core/runtime/repo-worker.mjs",
+    "bin/",
+    "lib/cloud-download.mjs",
+    "cordis.patch.yml",
+    "dsh.bundle.patch",
+    "integrity-manifest.json",
+    "specs/",
+    "provenance/",
+    "LICENSE",
+    "NOTICE",
+    "ATTRIBUTION.md",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md",
+    "FORMAL-ACCEPTANCE.md",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:cloud-install": "node --test tests/cloud-download.test.mjs",
+    "check": "node scripts/check.mjs",
+    "preflight": "node scripts/preflight.mjs",
+    "dsh-forma": "node scripts/dsh-forma.mjs",
+    "security-scan": "node scripts/security-scan.mjs"
+  },
+  "license": "MIT",
+  "engines": { "node": ">=24.14.0" },
+  "dependencies": {
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/cordis-plugin-include": "1.0.7",
+    "@deepseek-ai/dsh": "0.1.3-alpha.2",
+    "@deepseek-ai/dsh-app-boot": "0.1.3-alpha.2",
+    "@deepseek-ai/schemastery": "3.18.2",
+    "js-yaml": "4.1.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

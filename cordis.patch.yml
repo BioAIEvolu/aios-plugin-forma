@@ -1,0 +1,9 @@
+- insert:
+    - id: forma
+      name: aios-plugin-forma
+      config:
+        runtimeDigest: "sha256:45626ee9dac23f91195076273447c529cac96ec681ff0685e6d28b849ed1c555"
+        workRoot: !!js process.env.FORMA_WORK_ROOT
+        sourceRootsJson: !!js process.env.FORMA_SOURCE_ROOTS_JSON
+        reviewedSourceRootsJson: !!js process.env.FORMA_REVIEWED_SOURCE_ROOTS_JSON
+        timeoutMs: 15000

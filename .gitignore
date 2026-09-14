@@ -1,0 +1,10 @@
+node_modules/
+.work/
+*.log
+*.tgz
+*.tar.gz
+test-support/generated/
+coverage/
+evidence/
+security-scan.json
+forma-install-record.json

@@ -1,0 +1,11 @@
+import { readFile, stat } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root = fileURLToPath(new URL('../', import.meta.url));
+if (process.versions.node.split('.')[0] < 24) throw new Error('NODE_24_REQUIRED');
+for (const path of ['core/lib/records.mjs', 'core/lib/repo-source.mjs', 'core/lib/candidate.mjs', 'core/runtime/host-repo-worker.mjs', 'core/runtime/repo-supervisor.mjs', 'core/runtime/repo-worker.mjs']) await stat(join(root, path));
+const patches = [await readFile(join(root, 'cordis.patch.yml'), 'utf8'), await readFile(join(root, 'dsh.bundle.patch'), 'utf8')];
+if (patches.some(text => /coreRoot|FORMA_CORE_ROOT|AIOS[\\/]forma/i.test(text))) throw new Error('PATCH_REFERENCES_WORKSPACE_CORE');
+const pkg = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
+if (pkg.version !== '0.1.0' || pkg.license !== 'MIT') throw new Error('PACKAGE_BASELINE_MISMATCH');
+console.log(JSON.stringify({ status: 'passed', node: process.versions.node, dsh: pkg.dependencies['@deepseek-ai/dsh'], cordis: pkg.dependencies['@deepseek-ai/cordis'], include: pkg.dependencies['@deepseek-ai/cordis-plugin-include'] }));

@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "a618cf1ce2111cbe7ea91e8926221be80c41af57d48899155e24d353edc2588d"
+    },
+    {
+      "path": "NOTICE",
+      "sha256": "a883344f806d5ab5ea154a56ee4da57e2594a3342077e6c2f624f3e47e1e22af"
+    },
+    {
+      "path": "bin/aios-plugin-forma.mjs",
+      "sha256": "b867f34f6e7271308ada3856f117ebe1720413763767177c160a2b9416ecb06d"
+    },
+    {
+      "path": "core/lib/candidate.mjs",
+      "sha256": "3fb33f2248543e7f34131b700399869790de1e9c40ffe0fab63c5eeccf7ff8af"
+    },
+    {
+      "path": "core/lib/catalog.mjs",
+      "sha256": "00ded129a1d5c08525318d10bfa695b9151900f2781ab6549de8cc7b6c0461f9"
+    },
+    {
+      "path": "core/lib/coordinator.mjs",
+      "sha256": "da7479b7a4fcc8118c49d9db30082742592b79e4d09dad2f8a4efef0487132fe"
+    },
+    {
+      "path": "core/lib/license.mjs",
+      "sha256": "4c89bba74c893ae6f1799e2b6e20c5f64e3cd9082210c876688fe17bc0fc3dad"
+    },
+    {
+      "path": "core/lib/permissions.mjs",
+      "sha256": "09d04a1eb1da03ac4cc26601674003f2e60fb2c3e3ff2a95382d93a965c59df5"
+    },
+    {
+      "path": "core/lib/plan.mjs",
+      "sha256": "10bbd6a38d3dc38c3f2d9c3283fd27b61e2f9bef937e87869bd3b72273cdbae3"
+    },
+    {
+      "path": "core/lib/profile.mjs",
+      "sha256": "9f33e10802ccb9cd381d98980070133ad0dd6f0499432beec621a77016782752"
+    },
+    {
+      "path": "core/lib/records.mjs",
+      "sha256": "f453dbe87c5a51066034f0cdc3688935e9c81f092599553e3e8af054f0fbf9c4"
+    },
+    {
+      "path": "core/lib/repo-source.mjs",
+      "sha256": "0a3671bdfa722cf82855fdf57799f75e90c0991a9e1a94e7ac572748550a96cb"
+    },
+    {
+      "path": "core/lib/selection.mjs",
+      "sha256": "5f53a1a58a4124dc35697adead37a8eeb4a4fbe3d44163f06d796464ccd2754e"
+    },
+    {
+      "path": "core/lib/submissions.mjs",
+      "sha256": "cf6723b9950e49a8ff74e05b8fb3a4a978ffb500bbf0215687991cb7a8e13bb2"
+    },
+    {
+      "path": "core/lib/transformation.mjs",
+      "sha256": "46eb44f9384b9032ac4afa0cd09fbd6dbd7f876e7c5c2d7b2288d6a7c19d7d9b"
+    },
+    {
+      "path": "core/lib/validation.mjs",
+      "sha256": "45ac4e581c3db892b72248af0d5317b8ac65c4797bec40b761a444f111b24554"
+    },
+    {
+      "path": "core/runtime/host-repo-worker.mjs",
+      "sha256": "75b2dcd04f8fcbc675ad11bab0272b8d91a9af0d0c3190a5a342eade340aead7"
+    },
+    {
+      "path": "core/runtime/repo-supervisor.mjs",
+      "sha256": "77ea706a407490f3105ada56d0af95fa550d02c8553f9d72c77a805fbe9c1827"
+    },
+    {
+      "path": "core/runtime/repo-worker.mjs",
+      "sha256": "7cdc695726e085ee619c520dafe65b69477ad7d4cf2399c2faab078f8b5cd900"
+    },
+    {
+      "path": "host.mjs",
+      "sha256": "f3985806ed17b5af73d88da48a16aa5fb3ea23aca79819d4ce27462a4b76c3c5"
+    },
+    {
+      "path": "lib/cloud-download.mjs",
+      "sha256": "eaf29cfbafdff57da3531dfff1ef9e2dfd92b32214bbe47ca550654c64294b00"
+    },
+    {
+      "path": "package.json",
+      "sha256": "9e26e6547f37a0d0f0943b876e6712951b49e28dbedc07d6f3e0de2a9df2974a"
+    },
+    {
+      "path": "provenance/README.md",
+      "sha256": "cdcafe5e0594d5fa7d97ebcb00fabf77dd912f5152c41e3609ffe7a3b0b5cc2f"
+    },
+    {
+      "path": "specs/dto.json",
+      "sha256": "dc68a180e017872277bee53b05c4703cfa67448c2d0825c394110eaff775be35"
+    },
+    {
+      "path": "specs/tools.json",
+      "sha256": "c9ca7506e760ea4a7769ef39e96074fe21faa5c814e99b88723a30a69ba2ca87"
+    },
+    {
+      "path": "supervisor.mjs",
+      "sha256": "1a6b5ebae8291ba3465d9f1bc457f401e8256d32638659ea7ddd659a9a08ac4b"
+    },
+    {
+      "path": "worker.mjs",
+      "sha256": "4c30d655a017f6aadd127cdc0774ecb0851b9715bc08bea898334b4325da3344"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+# Keep the publication set deterministic even when npm's implicit file rules
+# include dependency-referenced directories.
+evidence/
+scripts/
+test-support/
+tests/
+core/runtime/*
+!core/runtime/host-repo-worker.mjs
+!core/runtime/repo-supervisor.mjs
+!core/runtime/repo-worker.mjs
+core/runtime/host.mjs
+core/runtime/supervisor.mjs
+core/runtime/worker.mjs
+package-lock.json
+*.tgz

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "forma-dto-tool-catalog",
+  "tools": [
+    "forma_source_snapshot",
+    "forma_scan_capabilities",
+    "forma_create_selection",
+    "forma_plan_transformation",
+    "forma_build_candidate",
+    "forma_validate_candidate",
+    "forma_export_plugin_repo"
+  ],
+  "transport": "versioned-json-stdio",
+  "execution": "host-supervisor-worker",
+  "source_policy": "static-read-and-managed-work-only"
+}
