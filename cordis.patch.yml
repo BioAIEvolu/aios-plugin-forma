@@ -2,7 +2,7 @@
     - id: forma
       name: aios-plugin-forma
       config:
-        runtimeDigest: "sha256:2cbe711404e38eef5a9a713096ec93429fcb697ddbeb537e210b4b6605afaeb0"
+        runtimeDigest: "sha256:4b9daa067909210fdf94b599cdf14221aa5d72af2f04943f9c997b01f629c7d1"
         workRoot: !!js process.env.FORMA_WORK_ROOT
         sourceRootsJson: !!js process.env.FORMA_SOURCE_ROOTS_JSON
         reviewedSourceRootsJson: !!js process.env.FORMA_REVIEWED_SOURCE_ROOTS_JSON

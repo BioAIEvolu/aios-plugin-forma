@@ -1,5 +1,7 @@
 # aios-plugin-forma
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 `aios-plugin-forma` is the AIOS self-building DSH plugin (Bundle). Given a
 local source project, it scans the source, identifies reusable capabilities,
 generates candidate plugins from a reviewed selection, and exports a candidate
