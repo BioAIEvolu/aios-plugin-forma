@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.2.0 - 2026-09-15
+
+- Reworked CLI user messaging: the default output is now concise, actionable
+  Chinese text with stable `[OK]/[INFO]/[WARN]/[ERROR]` labels (no ANSI
+  colours, no emoji); `--json` emits a single stable JSON document
+  (`schema_version: 1`) for scripts, `--verbose` routes raw DSH/pnpm
+  diagnostics to stderr, and `--plain` forces ASCII decoration.
+- Install distinguishes `installed` / `updated` / `already-installed`
+  (idempotent repeat installs skip DSH); inspect reports explicit
+  `installed` / `not-installed` states without mutating the profile;
+  uninstall reports `already-uninstalled` with exit code 0 and fails loudly
+  with residue paths when a bundle or profile config cannot be restored.
+- Internal errors map to stable machine codes with actionable hints and
+  documented exit codes (2/10/11/12/13/14/15/16/17); signed GitHub asset
+  URLs, tokens and query secrets are redacted from all output.
+- Guarded against external profile modification during install
+  (`PROFILE_CHANGED`) and against temporary-download cleanup failures
+  (`CLEANUP_FAILED`).
+- Tool counts in install/inspect output are read from the installed
+  `specs/tools.json`, never hard-coded.
+
 ## 0.1.1 - 2026-09-15
 
 - Public release for BioAIEvolu/aios-plugin-forma with the verified cloud

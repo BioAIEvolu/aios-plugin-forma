@@ -51,20 +51,34 @@ DSH Profile。Worker 只读取已配置的 source root，只写入受管 work ro
 该包包含一个真实的 `aios-plugin-forma` 可执行文件，从本地 tarball 运行：
 
 ```powershell
-npx --yes --package .\aios-plugin-forma-0.1.1.tgz aios-plugin-forma install `
+npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma install `
   --dsh-home <disposable-dsh-home> `
   --profile forma-test `
   --work-root <disposable-work-root> `
   --source-root <fixture-root>\m1\repo-tool-mit
-npx --yes --package .\aios-plugin-forma-0.1.1.tgz aios-plugin-forma inspect `
+npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma inspect `
   --dsh-home <disposable-dsh-home> --profile forma-test
-npx --yes --package .\aios-plugin-forma-0.1.1.tgz aios-plugin-forma uninstall `
+npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma uninstall `
   --dsh-home <disposable-dsh-home> --profile forma-test
 ```
 
 `--dsh-home`、`--profile`、`--work-root` 和 `--source-root` 始终显式必填：CLI 绝不会
 回退到 `%USERPROFILE%\.dsh`。`npm install` 只负责获取该包，`npx` 运行这个二进制，
 DSH 在正常的 profile 重启后激活该 Bundle。没有任何生命周期脚本会修改 profile。
+
+### 输出模式
+
+- **默认（人类可读）：** 简洁中文状态行，使用稳定的 `[OK]/[INFO]/[WARN]/[ERROR]`
+  标签——无颜色、无表情符号。安装成功会打印下一步和卸载命令；错误会打印稳定的
+  `machine_code`、原因和下一步建议，并以文档化退出码结束（2 用法错误、10 缺少
+  pnpm、11 URL 策略、12 下载/摘要、13 DSH 失败、14 Profile 被外部修改、15 完整性、
+  16 来源目录、17 清理失败）。
+- **`--json`：** stdout 只输出一份稳定 JSON（`schema_version: 1`）——字段含
+  `command`、`status`、`package`、`version`、`profile`、`dsh_home`、
+  `runtime_digest`、`requested_url`/`final_url`、`sha256`、`bytes`、`next_steps`、
+  `error`。带签名的资产 URL、token 和查询密钥在所有输出中一律脱敏。
+- **`--verbose`：** 额外把 DSH/pnpm 原始诊断输出到 stderr。
+- **`--plain`：** 装饰字符强制为纯 ASCII。
 
 ## 云端安装
 
@@ -74,10 +88,10 @@ SHA-256。只接受固定格式
 绝不使用 `main`、`latest`、分支归档或任何未固定引用：
 
 ```powershell
-npx --yes --package .\aios-plugin-forma-0.1.1.tgz aios-plugin-forma install `
+npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma install `
   --dsh-home <absolute-disposable-dsh-home> --profile forma-test `
   --work-root <absolute-disposable-work-root> --source-root <absolute-source-root> `
-  --package-url https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.1.1/aios-plugin-forma-0.1.1.tgz `
+  --package-url https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.2.0/aios-plugin-forma-0.2.0.tgz `
   --sha256 <64-hex-sha256-of-the-release-asset> --max-download-bytes 52428800
 ```
 

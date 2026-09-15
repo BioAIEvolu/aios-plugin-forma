@@ -61,14 +61,14 @@ The package contains a real `aios-plugin-forma` binary. It is exercised from a
 local tarball:
 
 ```powershell
-npx --yes --package .\aios-plugin-forma-0.1.1.tgz aios-plugin-forma install `
+npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma install `
   --dsh-home <disposable-dsh-home> `
   --profile forma-test `
   --work-root <disposable-work-root> `
   --source-root <fixture-root>\m1\repo-tool-mit
-npx --yes --package .\aios-plugin-forma-0.1.1.tgz aios-plugin-forma inspect `
+npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma inspect `
   --dsh-home <disposable-dsh-home> --profile forma-test
-npx --yes --package .\aios-plugin-forma-0.1.1.tgz aios-plugin-forma uninstall `
+npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma uninstall `
   --dsh-home <disposable-dsh-home> --profile forma-test
 ```
 
@@ -77,6 +77,23 @@ explicit and required: the CLI never falls back to `%USERPROFILE%\.dsh`.
 `npm install` only obtains the package, `npx` runs this binary, and DSH
 activates the bundle after its normal profile restart. No lifecycle script
 modifies a profile.
+
+### Output modes
+
+- **Default (human):** concise Chinese status lines with stable
+  `[OK]/[INFO]/[WARN]/[ERROR]` labels — no ANSI colours, no emoji. Successful
+  installs print next steps and the uninstall command; errors print a stable
+  `machine_code`, the cause and the next action, and exit with a documented
+  code (2 usage, 10 pnpm missing, 11 URL policy, 12 download/digest,
+  13 DSH failure, 14 profile changed externally, 15 integrity, 16 source
+  root, 17 cleanup).
+- **`--json`:** exactly one stable JSON document (`schema_version: 1`) on
+  stdout — fields include `command`, `status`, `package`, `version`,
+  `profile`, `dsh_home`, `runtime_digest`, `requested_url`/`final_url`,
+  `sha256`, `bytes`, `next_steps` and `error`. Signed asset URLs, tokens and
+  query secrets are redacted everywhere.
+- **`--verbose`:** additionally streams raw DSH/pnpm diagnostics to stderr.
+- **`--plain`:** forces ASCII decoration characters.
 
 ## Cloud installation
 
@@ -87,10 +104,10 @@ are accepted — never `main`, `latest`, branch archives or any unpinned
 reference:
 
 ```powershell
-npx --yes --package .\aios-plugin-forma-0.1.1.tgz aios-plugin-forma install `
+npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma install `
   --dsh-home <absolute-disposable-dsh-home> --profile forma-test `
   --work-root <absolute-disposable-work-root> --source-root <absolute-source-root> `
-  --package-url https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.1.1/aios-plugin-forma-0.1.1.tgz `
+  --package-url https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.2.0/aios-plugin-forma-0.2.0.tgz `
   --sha256 <64-hex-sha256-of-the-release-asset> --max-download-bytes 52428800
 ```
 

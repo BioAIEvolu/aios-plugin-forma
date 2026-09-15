@@ -11,7 +11,7 @@
     },
     {
       "path": "bin/aios-plugin-forma.mjs",
-      "sha256": "b867f34f6e7271308ada3856f117ebe1720413763767177c160a2b9416ecb06d"
+      "sha256": "045ff2b804a5315b5ff5d4f1e492fd2b050b93c19a69c770a850f561e3ae684f"
     },
     {
       "path": "core/lib/candidate.mjs",
@@ -82,12 +82,16 @@
       "sha256": "f3985806ed17b5af73d88da48a16aa5fb3ea23aca79819d4ce27462a4b76c3c5"
     },
     {
+      "path": "lib/cli.mjs",
+      "sha256": "60298bd76606579b217c8809a757c7d85d781563848930d671b9e4358570603f"
+    },
+    {
       "path": "lib/cloud-download.mjs",
       "sha256": "eaf29cfbafdff57da3531dfff1ef9e2dfd92b32214bbe47ca550654c64294b00"
     },
     {
       "path": "package.json",
-      "sha256": "8a7b7687d24397931811cdf72854e81e0391030240551c83b35ebaa98e614eea"
+      "sha256": "e54aeba7453d9ec3f62a966b06ea4671e1f3a4672fd630ba6dc912a9e78b155d"
     },
     {
       "path": "provenance/README.md",

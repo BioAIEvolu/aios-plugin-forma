@@ -20,7 +20,7 @@ async function walk(dir) {
 const top = new Set(['host.mjs', 'worker.mjs', 'supervisor.mjs', 'package.json', 'LICENSE', 'NOTICE']);
 const files = [];
 const runtime = new Set(['core/runtime/host-repo-worker.mjs', 'core/runtime/repo-supervisor.mjs', 'core/runtime/repo-worker.mjs']);
-for (const path of (await walk(root)).filter(path => path.startsWith('core/lib/') || runtime.has(path) || path.startsWith('bin/') || path === 'lib/cloud-download.mjs' || path.startsWith('specs/') || path.startsWith('provenance/') || top.has(path)).sort()) {
+for (const path of (await walk(root)).filter(path => path.startsWith('core/lib/') || runtime.has(path) || path.startsWith('bin/') || path.startsWith('lib/') || path.startsWith('specs/') || path.startsWith('provenance/') || top.has(path)).sort()) {
   files.push({ path, sha256: createHash('sha256').update(await readFile(join(root, path))).digest('hex') });
 }
 await writeFile(join(root, 'integrity-manifest.json'), JSON.stringify({ schema_version: 1, files }, null, 2) + '\n');

@@ -1,6 +1,6 @@
 {
   "name": "aios-plugin-forma",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Self-contained Forma self-building bundle for local DSH profiles",
   "repository": {
     "type": "git",
@@ -43,6 +43,7 @@
     "core/runtime/repo-supervisor.mjs",
     "core/runtime/repo-worker.mjs",
     "bin/",
+    "lib/cli.mjs",
     "lib/cloud-download.mjs",
     "cordis.patch.yml",
     "dsh.bundle.patch",
