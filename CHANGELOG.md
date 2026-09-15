@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.1 - 2026-09-15
+
+- Public release for BioAIEvolu/aios-plugin-forma with the verified cloud
+  installer (HTTPS GitHub Release asset download + SHA-256 verification before
+  DSH invocation, bounded streaming, temp-directory cleanup and install record).
+- Added bilingual README (English + 简体中文) with a language switcher.
+- Pinned `repository`/`homepage`/`bugs` to the public GitHub repository.
+- Enforced LF line endings via `.gitattributes` so Windows clones keep the
+  runtime integrity manifest valid.
+
 ## 0.1.0 - 2026-09-12
 
 - First formal local repository export of the accepted Forma DSH bundle.

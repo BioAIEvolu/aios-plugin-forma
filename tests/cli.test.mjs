@@ -14,7 +14,7 @@ function run(args) {
 }
 test('CLI help and version are side-effect free and do not need a profile', async () => {
   const help = await run(['--help']); assert.equal(help.code, 0); assert.match(help.stdout, /--dsh-home/); assert.match(help.stdout, /--package-url/); assert.equal(help.stderr, '');
-  const version = await run(['--version']); assert.equal(version.code, 0); assert.match(version.stdout.trim(), /^0\.1\.0$/);
+  const version = await run(['--version']); assert.equal(version.code, 0); assert.match(version.stdout.trim(), /^0\.1\.1$/);
   const missing = await run(['inspect', '--profile', 'forma-test']); assert.notEqual(missing.code, 0); assert.match(missing.stderr, /DSH_HOME_REQUIRED/);
 });
 test('publication allowlist excludes evidence, probes and package-lock', async () => {

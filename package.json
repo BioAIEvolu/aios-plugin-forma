@@ -1,6 +1,6 @@
 {
   "name": "aios-plugin-forma",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Self-contained Forma self-building bundle for local DSH profiles",
   "repository": {
     "type": "git",

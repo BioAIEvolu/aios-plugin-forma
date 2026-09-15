@@ -7,5 +7,5 @@ for (const path of ['core/lib/records.mjs', 'core/lib/repo-source.mjs', 'core/li
 const patches = [await readFile(join(root, 'cordis.patch.yml'), 'utf8'), await readFile(join(root, 'dsh.bundle.patch'), 'utf8')];
 if (patches.some(text => /coreRoot|FORMA_CORE_ROOT|AIOS[\\/]forma/i.test(text))) throw new Error('PATCH_REFERENCES_WORKSPACE_CORE');
 const pkg = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
-if (pkg.version !== '0.1.0' || pkg.license !== 'MIT') throw new Error('PACKAGE_BASELINE_MISMATCH');
+if (pkg.version !== '0.1.1' || pkg.license !== 'MIT') throw new Error('PACKAGE_BASELINE_MISMATCH');
 console.log(JSON.stringify({ status: 'passed', node: process.versions.node, dsh: pkg.dependencies['@deepseek-ai/dsh'], cordis: pkg.dependencies['@deepseek-ai/cordis'], include: pkg.dependencies['@deepseek-ai/cordis-plugin-include'] }));
