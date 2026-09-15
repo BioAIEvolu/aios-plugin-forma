@@ -48,13 +48,10 @@ Not yet supported (explicit non-goals for this release):
 See `specs/tools.json`, `specs/dto.json`, `provenance/README.md`, and
 `FORMAL-ACCEPTANCE.md` for the contract and acceptance procedure.
 
-## Repository metadata placeholder
+## Repository
 
-The `repository`, `homepage` and `bugs` fields in `package.json` currently use
-the placeholder owner `YOUR-GITHUB-USERNAME` because no public GitHub account
-has been chosen yet. Replace it with the real owner before creating the GitHub
-repository, then regenerate `integrity-manifest.json`, the runtime digest in
-both bundle patches, the tarball and its SHA-256. See `RELEASING.md`.
+Source: <https://github.com/BioAIEvolu/aios-plugin-forma>. Releases are
+pinned GitHub Release assets (see below); `npm publish` is not used.
 
 ## Local CLI
 
@@ -91,7 +88,7 @@ reference:
 npx --yes --package .\aios-plugin-forma-0.1.0.tgz aios-plugin-forma install `
   --dsh-home <absolute-disposable-dsh-home> --profile forma-test `
   --work-root <absolute-disposable-work-root> --source-root <absolute-source-root> `
-  --package-url https://github.com/<owner>/aios-plugin-forma/releases/download/v0.1.0/aios-plugin-forma-0.1.0.tgz `
+  --package-url https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.1.0/aios-plugin-forma-0.1.0.tgz `
   --sha256 <64-hex-sha256-of-the-release-asset> --max-download-bytes 52428800
 ```
 

@@ -4,11 +4,11 @@
   "description": "Self-contained Forma self-building bundle for local DSH profiles",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YOUR-GITHUB-USERNAME/aios-plugin-forma.git"
+    "url": "git+https://github.com/BioAIEvolu/aios-plugin-forma.git"
   },
-  "homepage": "https://github.com/YOUR-GITHUB-USERNAME/aios-plugin-forma#readme",
+  "homepage": "https://github.com/BioAIEvolu/aios-plugin-forma#readme",
   "bugs": {
-    "url": "https://github.com/YOUR-GITHUB-USERNAME/aios-plugin-forma/issues"
+    "url": "https://github.com/BioAIEvolu/aios-plugin-forma/issues"
   },
   "type": "module",
   "main": "./host.mjs",
