@@ -1,0 +1,16 @@
+# Line-ending policy for this repository.
+# All text files are stored and checked out as LF regardless of the local
+# core.autocrlf setting (e.g. Git for Windows defaults it to true, which
+# would otherwise turn files into CRLF and break the SHA-256 integrity
+# manifest / runtime digest verification). Binary files are never converted.
+* text=auto eol=lf
+
+# Packaging artifacts and images are binary: never convert, never diff.
+*.tgz    -text
+*.tar.gz -text
+*.tar    -text
+*.png    -text
+*.jpg    -text
+*.jpeg   -text
+*.gif    -text
+*.ico    -text
