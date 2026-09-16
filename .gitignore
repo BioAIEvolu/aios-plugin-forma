@@ -8,3 +8,4 @@ coverage/
 evidence/
 security-scan.json
 forma-install-record.json
+.work-*
