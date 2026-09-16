@@ -395,7 +395,7 @@ async function main() {
     cordis: '4.0.2',
     include: '1.0.7',
     node: process.versions.node,
-    pnpm: probePnpm() ?? 'not-on-PATH',
+    pnpm: (await probePnpm()) ?? 'not-on-PATH',
     dsh_home: home,
     evidence_dir: evidence,
     generated_artifact_digest: exported?.artifact_digest ?? null,
