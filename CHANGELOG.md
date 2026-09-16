@@ -32,6 +32,15 @@
   (`CLEANUP_FAILED`).
 - Declared tool counts are read from the installed `specs/tools.json`, never
   hard-coded.
+- Hardened the `dsh-forma` acceptance script: per-stage hard timeouts (cold boot
+  90s default, re-boot separately configurable, pack/install/remove/candidate
+  each bounded) that terminate the full process tree and preserve trailing
+  stdout/stderr on timeout instead of hanging; continuous `progress.json`
+  stage tracking; and a `ValidationReport.json` always written in `finally`
+  with status, required/missing/failed checks, last stage, per-stage timings,
+  DSH/Cordis/Include/Node/pnpm versions and any limitation. Real tarball
+  uninstall is verified via DSH `remove` (dependency + patch removal, empty
+  tools on re-boot, worker exit, config restore).
 
 ## 0.1.1 - 2026-09-15
 
