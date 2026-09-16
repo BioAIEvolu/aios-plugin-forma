@@ -83,7 +83,7 @@
     },
     {
       "path": "lib/cli.mjs",
-      "sha256": "a31426c71f344af2697f6049665983c1d20d0052cd916ade7e158000a9d5fac1"
+      "sha256": "6b6c0de08798a455e6a3cf0523a5d573c627f0dd1fdd5a47a7e62b0d747a979c"
     },
     {
       "path": "lib/cloud-download.mjs",
