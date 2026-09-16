@@ -72,8 +72,9 @@ function endPhase(name, status, err) {
   saveSync('progress.json', progressPayload());
 }
 function recordCheck(name, status, extra = {}) {
-  const p = phases.find(x => x.name === name && x.status === 'running');
-  const duration_ms = p ? Math.max(0, Date.now() - Date.parse(p.started_at)) : null;
+  const peers = phases.filter(x => x.name === name);
+  const p = peers[peers.length - 1];
+  const duration_ms = p?.duration_ms ?? null;
   checks.push({ name, status, duration_ms, ...(status !== 'passed' && extra.error ? { error: extra.error } : {}) });
 }
 const save = (name, value) => writeFile(join(evidence, name), JSON.stringify(value, null, 2) + '\n');
@@ -146,14 +147,16 @@ async function boot({ expectReady = true, profileName = 'forma-test', readyPrefi
     return err;
   };
   const ready = new Promise((resolveReady, reject) => {
+    let settled = false;
+    const settleOnce = () => { if (settled) return false; settled = true; return true; };
     const timer = setTimeout(() => {
-      if (expectReady) { killTree(child); reject(bootFailure(null, 'timeout', `BOOT_TIMEOUT after ${resolvedTimeout}ms (${label})`)); }
-      else { clearTimeout(timer); resolveReady(null); }
+      if (expectReady) { if (settleOnce()) { killTree(child); reject(bootFailure(null, 'timeout', `BOOT_TIMEOUT after ${resolvedTimeout}ms (${label})`)); } }
+      else if (settleOnce()) { clearTimeout(timer); resolveReady(null); }
     }, resolvedTimeout);
-    child.stdout.on('data', chunk => { stdout += chunk; const match = stdout.match(new RegExp(`${readyPrefix} (\\{[^\\n]+\\})`)); if (match) { clearTimeout(timer); resolveReady(JSON.parse(match[1]).origin); } });
+    child.stdout.on('data', chunk => { stdout += chunk; const match = stdout.match(new RegExp(`${readyPrefix} (\\{[^\\n]+\\})`)); if (match && settleOnce()) { clearTimeout(timer); resolveReady(JSON.parse(match[1]).origin); } });
     child.stderr.on('data', chunk => { stderr += chunk; });
-    child.once('error', error => { clearTimeout(timer); reject(bootFailure(null, 'error', error.message)); });
-    child.once('close', code => { if (expectReady) { clearTimeout(timer); reject(bootFailure(code, 'exit', `BOOT_EXIT ${code} (${label})\n${stderr.slice(-3000)}`)); } else { clearTimeout(timer); resolveReady(null); } });
+    child.once('error', error => { if (settleOnce()) { clearTimeout(timer); reject(bootFailure(null, 'error', error.message)); } });
+    child.once('close', code => { if (expectReady) { if (settleOnce()) { clearTimeout(timer); reject(bootFailure(code, 'exit', `BOOT_EXIT ${code} (${label})\n${stderr.slice(-3000)}`)); } } else if (settleOnce()) { clearTimeout(timer); resolveReady(null); } });
   });
   const origin = await ready;
   endPhase(label, 'passed');
