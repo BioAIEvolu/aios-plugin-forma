@@ -424,4 +424,4 @@ async function main() {
   return metaStatus;
 }
 
-main().then(status => { process.exitCode = status === 'passed' ? 0 : 1; });
+main().then(status => process.exit(status === 'passed' ? 0 : 1));
