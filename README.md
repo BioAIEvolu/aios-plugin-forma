@@ -81,6 +81,51 @@ modifies a profile.
 ### Output modes
 
 - **Default (human):** concise Chinese status lines with stable
+  `[OK]/[INFO]/[WARN]/[ERROR]` labels — no colours, no emoji. Errors print a
+  stable `machine_code`, the cause and a next-step hint, and exit with a
+  documented code (2 usage, 10 pnpm missing, 11 URL policy, 12
+  download/digest, 13 DSH failure, 14 external profile change, 15 integrity,
+  16 source root, 17 cleanup).
+- **`--json`:** one stable JSON document on stdout (`schema_version: 1`) with
+  `command`, `status`, `package`, `version`, `profile`, `dsh_home`,
+  `runtime_digest`, `requested_url`/`final_url`, `sha256`, `bytes`,
+  `configuration_status`, `runtime_health`, `declared_tool_count`, `pnpm`,
+  `next_steps`, `error`. Signed asset URLs, tokens and query secrets are
+  redacted from all output.
+- **`--verbose`:** raw DSH/pnpm diagnostics on stderr.
+- **`--plain`:** forces ASCII decoration.
+
+### What install actually verifies
+
+`install` completes **package installation and profile configuration** (the
+written runtimeDigest matches the current CLI). It never connects to a running
+DSH host: tool activation is confirmed by a health check after you start or
+restart DSH (`runtime_health: not_checked`). Repeat installs are idempotent —
+`already-installed` means version and configuration are unchanged and DSH is
+not invoked again.
+
+### Automatic pnpm resolution
+
+DSH plugin management needs pnpm. Before every install/uninstall the CLI
+resolves it without touching the global PATH:
+
+1. pnpm already on PATH → used directly;
+2. otherwise the Node-bundled corepack backs a Forma-owned shim inside the
+   **caller-specified DSH_HOME** (`<dsh-home>/.forma/shims`, pinned pnpm
+   12.3.4), prepended only to the DSH child-process PATH — no
+   `corepack enable`, no system/user PATH changes;
+3. the corepack cache also stays inside DSH_HOME (`.forma/corepack-cache`);
+   shims and cache are retained for reuse and disappear with the disposable
+   DSH_HOME;
+4. only when both are unavailable does the CLI fail with `PNPM_REQUIRED`
+   (exit 10), reporting the probe results and safe installation options.
+
+The resolution (provider/version/redacted shim path) is recorded in the
+`--json` output and in `forma-install-record.json`.
+
+### Output modes
+
+- **Default (human):** concise Chinese status lines with stable
   `[OK]/[INFO]/[WARN]/[ERROR]` labels — no ANSI colours, no emoji. Successful
   installs print next steps and the uninstall command; errors print a stable
   `machine_code`, the cause and the next action, and exit with a documented

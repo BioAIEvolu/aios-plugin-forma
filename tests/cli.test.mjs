@@ -38,4 +38,5 @@ test('publication allowlist excludes evidence, probes and package-lock but ships
   assert.ok(pkg.bin?.['aios-plugin-forma']);
   assert.ok(pkg.files.includes('lib/cli.mjs'));
   assert.ok(pkg.files.includes('lib/cloud-download.mjs'));
+  assert.ok(pkg.files.includes('lib/pnpm-resolve.mjs'));
 });

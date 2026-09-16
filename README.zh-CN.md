@@ -75,10 +75,33 @@ DSH 在正常的 profile 重启后激活该 Bundle。没有任何生命周期脚
   16 来源目录、17 清理失败）。
 - **`--json`：** stdout 只输出一份稳定 JSON（`schema_version: 1`）——字段含
   `command`、`status`、`package`、`version`、`profile`、`dsh_home`、
-  `runtime_digest`、`requested_url`/`final_url`、`sha256`、`bytes`、`next_steps`、
-  `error`。带签名的资产 URL、token 和查询密钥在所有输出中一律脱敏。
+  `runtime_digest`、`requested_url`/`final_url`、`sha256`、`bytes`、
+  `configuration_status`、`runtime_health`、`declared_tool_count`、`pnpm`、
+  `next_steps`、`error`。带签名的资产 URL、token 和查询密钥在所有输出中一律脱敏。
 - **`--verbose`：** 额外把 DSH/pnpm 原始诊断输出到 stderr。
 - **`--plain`：** 装饰字符强制为纯 ASCII。
+
+### install 的实际边界
+
+`install` 完成的是**插件包安装与 Profile 配置写入**（runtimeDigest 与当前 CLI 一致），
+它**不会连接正在运行的 DSH**。工具是否激活由你启动/重启 DSH 后的健康检查确认
+（`runtime_health: not_checked`）。重复安装是幂等的：`already-installed` 表示版本与
+配置均未改变，不会重复调用 DSH。
+
+### pnpm 自动解析
+
+DSH 的插件管理依赖 pnpm。CLI 在每次 install/uninstall 前自动解析：
+
+1. PATH 已有 pnpm → 直接使用；
+2. 否则使用当前 Node 附带的 corepack，在**你显式指定的 DSH_HOME** 内创建 Forma 自有
+   shim（`<dsh-home>/.forma/shims`，固定 pnpm 12.3.4），只把该目录前置到 DSH 子进程的
+   PATH——**不修改系统/用户全局 PATH**，不执行 `corepack enable`；
+3. corepack 缓存同样留在 DSH_HOME 内（`.forma/corepack-cache`），卸载时 shim 与缓存
+   保留复用，随可丢弃 DSH_HOME 一并删除即可；
+4. 两者都不可用才报 `PNPM_REQUIRED`（退出码 10），并说明探测结果与安全安装方法。
+
+解析结果（provider/version/脱敏 shim 路径）写入 `--json` 输出和
+`forma-install-record.json`。
 
 ## 云端安装
 

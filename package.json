@@ -45,6 +45,7 @@
     "bin/",
     "lib/cli.mjs",
     "lib/cloud-download.mjs",
+    "lib/pnpm-resolve.mjs",
     "cordis.patch.yml",
     "dsh.bundle.patch",
     "integrity-manifest.json",

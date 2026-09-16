@@ -1,12 +1,24 @@
 # Changelog
 
-## 0.2.0 - 2026-09-15
+## 0.2.0 - 2026-09-16
 
 - Reworked CLI user messaging: the default output is now concise, actionable
   Chinese text with stable `[OK]/[INFO]/[WARN]/[ERROR]` labels (no ANSI
   colours, no emoji); `--json` emits a single stable JSON document
   (`schema_version: 1`) for scripts, `--verbose` routes raw DSH/pnpm
   diagnostics to stderr, and `--plain` forces ASCII decoration.
+- Added automatic pnpm resolution: PATH pnpm is used directly; otherwise a
+  Forma-owned corepack shim (pinned pnpm 12.3.4) is created inside the
+  caller-specified DSH_HOME and prepended only to the DSH child-process
+  PATH — no global PATH changes, no `corepack enable`. Resolution is recorded
+  in the JSON output and `forma-install-record.json`; both pnpm and corepack
+  missing yields `PNPM_REQUIRED` (exit 10) with probe results.
+- Honest verification scope: install reports package+profile configuration
+  only (`configuration_status`, `runtime_health: not_checked`,
+  `declared_tool_count`) and never claims a running runtime; inspect reports
+  `matched|mismatched|absent` configuration and an explicitly unchecked
+  runtime state; uninstall only claims temp-directory cleanup for leftovers
+  it actually removed.
 - Install distinguishes `installed` / `updated` / `already-installed`
   (idempotent repeat installs skip DSH); inspect reports explicit
   `installed` / `not-installed` states without mutating the profile;
@@ -18,8 +30,8 @@
 - Guarded against external profile modification during install
   (`PROFILE_CHANGED`) and against temporary-download cleanup failures
   (`CLEANUP_FAILED`).
-- Tool counts in install/inspect output are read from the installed
-  `specs/tools.json`, never hard-coded.
+- Declared tool counts are read from the installed `specs/tools.json`, never
+  hard-coded.
 
 ## 0.1.1 - 2026-09-15
 

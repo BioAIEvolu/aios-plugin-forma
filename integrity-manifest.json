@@ -83,15 +83,19 @@
     },
     {
       "path": "lib/cli.mjs",
-      "sha256": "60298bd76606579b217c8809a757c7d85d781563848930d671b9e4358570603f"
+      "sha256": "a31426c71f344af2697f6049665983c1d20d0052cd916ade7e158000a9d5fac1"
     },
     {
       "path": "lib/cloud-download.mjs",
       "sha256": "eaf29cfbafdff57da3531dfff1ef9e2dfd92b32214bbe47ca550654c64294b00"
     },
     {
+      "path": "lib/pnpm-resolve.mjs",
+      "sha256": "1e149fce713d1108c65514741c28793cb2a77632981a9aa582fb566d7f91a36b"
+    },
+    {
       "path": "package.json",
-      "sha256": "e54aeba7453d9ec3f62a966b06ea4671e1f3a4672fd630ba6dc912a9e78b155d"
+      "sha256": "24c5d69c889f406e54fe63b89da0270b13f360e970077a4d1f75fe45d5c35ba0"
     },
     {
       "path": "provenance/README.md",
