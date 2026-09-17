@@ -83,7 +83,7 @@
     },
     {
       "path": "lib/cli.mjs",
-      "sha256": "6b6c0de08798a455e6a3cf0523a5d573c627f0dd1fdd5a47a7e62b0d747a979c"
+      "sha256": "86d4cd807c67e4aef362ca1ca950a02ee44fc8fd03e2317ad74821ff2ca621af"
     },
     {
       "path": "lib/cloud-download.mjs",
@@ -95,7 +95,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "24c5d69c889f406e54fe63b89da0270b13f360e970077a4d1f75fe45d5c35ba0"
+      "sha256": "11684f96a94874f90cf60517f785464f0f3eccdb5a29ed463ec160fd410947e4"
     },
     {
       "path": "provenance/README.md",

@@ -4,9 +4,10 @@ import { mkdtemp, mkdir, rm, readFile, writeFile, appendFile, access } from 'nod
 import { tmpdir } from 'node:os';
 import { join, delimiter } from 'node:path';
 import { runCli } from '../lib/cli.mjs';
+import { createRequire } from 'node:module';
 
 const PACKAGE = 'aios-plugin-forma';
-const RELEASE_URL = 'https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.2.0/aios-plugin-forma-0.2.0.tgz';
+const RELEASE_URL = 'https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.2.1/aios-plugin-forma-0.2.1.tgz';
 const SIGNED_URL = 'https://objects.githubusercontent.com/github-production-release-asset/61abc/def?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Signature=SECRET123&X-Amz-Expires=300';
 const SHA = 'a'.repeat(64);
 const WRONG_SHA_ERROR = new Error(`PACKAGE_SHA256_MISMATCH:${'b'.repeat(64)}`);
@@ -44,7 +45,7 @@ async function simulateInstalled(dir) {
   const specDir = join(dir, 'node_modules', PACKAGE, 'specs');
   await mkdir(specDir, { recursive: true });
   await writeFile(join(specDir, 'tools.json'), JSON.stringify({ schema_version: 1, tools: [{ name: 'a' }, { name: 'b' }, { name: 'c' }] }));
-  await writeFile(join(dir, 'node_modules', PACKAGE, 'package.json'), JSON.stringify({ name: PACKAGE, version: '0.2.0' }));
+  await writeFile(join(dir, 'node_modules', PACKAGE, 'package.json'), JSON.stringify({ name: PACKAGE, version: '0.2.1' }));
 }
 const text = io => io.out.join('\n');
 const errText = io => io.err.join('\n');
@@ -85,7 +86,7 @@ test('install --json prints one stable JSON document with honest fields and reda
     assert.equal(payload.command, 'install');
     assert.equal(payload.status, 'installed');
     assert.equal(payload.package, PACKAGE);
-    assert.equal(payload.version, '0.2.0');
+    assert.equal(payload.version, '0.2.1');
     assert.equal(payload.profile, 'forma-test');
     assert.equal(payload.dsh_home, f.home);
     assert.equal(payload.requested_url, RELEASE_URL);
@@ -117,7 +118,7 @@ test('repeated install is idempotent: already-installed, config unchanged, DSH a
     assert.equal(code, 0);
     assert.equal(f.calls.length, callsAfterFirst, 'idempotent install must not invoke DSH');
     assert.equal(resolved, 0, 'idempotent install must not resolve pnpm');
-    assert.match(text(io2), /已是最新版本（0\.2\.0），配置未改变/);
+    assert.match(text(io2), /已是最新版本（0\.2\.1），配置未改变/);
     const io3 = { out: [], err: [] };
     await runCli([...f.installArgs, '--json'], { ...f.deps, out: line => io3.out.push(line), err: line => io3.err.push(line) });
     const payload = JSON.parse(io3.out[0]);
@@ -126,6 +127,54 @@ test('repeated install is idempotent: already-installed, config unchanged, DSH a
   } finally { await f.cleanup(); }
 });
 
+// --- Boot-safety regression (v0.2.1): the bundle already inserts id 'forma';
+// the CLI must override that entry, never insert a duplicate. -------------
+const requireYaml = createRequire(import.meta.url);
+const yaml = requireYaml('js-yaml');
+const repoRoot = new URL('../', import.meta.url);
+async function currentRuntimeDigest() {
+  const text = await readFile(new URL('cordis.patch.yml', repoRoot), 'utf8');
+  return text.match(/runtimeDigest:\s*["']?([^\s"']+)/)?.[1] ?? null;
+}
+function formaShapes(layers) {
+  const list = Array.isArray(layers) ? layers : [];
+  return {
+    inserted: list.flatMap(layer => (Array.isArray(layer?.insert) ? layer.insert : [])).filter(entry => entry?.id === 'forma'),
+    overrides: list.filter(layer => layer && !Array.isArray(layer.insert) && layer.id === 'forma'),
+  };
+}
+
+test('install writes an override patch row (no duplicate insert id) so the profile can boot', async () => {
+  const f = await fixture();
+  try {
+    assert.equal(await runCli(f.installArgs, f.deps), 0);
+    const layers = yaml.load(await readFile(join(f.dir, 'cordis.patch.yml'), 'utf8'));
+    const { inserted, overrides } = formaShapes(layers);
+    assert.equal(inserted.length, 0, 'profile patch must not insert a second forma entry (Cordis rejects duplicate loader entry id at boot)');
+    assert.equal(overrides.length, 1, 'exactly one override row configures the bundle-provided entry');
+    assert.equal(overrides[0].name, PACKAGE);
+    assert.equal(typeof overrides[0].config?.runtimeDigest, 'string');
+    assert.equal(overrides[0].config?.workRoot, f.work);
+  } finally { await f.cleanup(); }
+});
+
+test('legacy v0.2.0 insert-shaped row is repaired to an override even when config matches', async () => {
+  const f = await fixture();
+  try {
+    // Simulate a profile left by the v0.2.0 CLI: insert-shaped row, same
+    // config a new install would compute, bundle already at this version.
+    await mkdir(f.dir, { recursive: true });
+    await simulateInstalled(f.dir);
+    const legacyConfig = { runtimeDigest: await currentRuntimeDigest(), workRoot: f.work, sourceRootsJson: JSON.stringify([f.source]), reviewedSourceRootsJson: '[]', timeoutMs: 15000 };
+    await writeFile(join(f.dir, 'cordis.patch.yml'), yaml.dump([{ insert: [{ id: 'forma', name: PACKAGE, config: legacyConfig }] }]));
+    const code = await runCli(f.installArgs, f.deps);
+    assert.equal(code, 0);
+    assert.ok(f.calls.some(args => args.includes('install')), 'legacy row must force a real rewrite, not already-installed');
+    const { inserted, overrides } = formaShapes(yaml.load(await readFile(join(f.dir, 'cordis.patch.yml'), 'utf8')));
+    assert.equal(inserted.length, 0, 'legacy insert row removed');
+    assert.equal(overrides.length, 1, 'override row written in its place');
+  } finally { await f.cleanup(); }
+});
 test('local install without --package-url announces the local package source', async () => {
   const f = await fixture();
   try {
@@ -186,7 +235,7 @@ test('inspect reports installed state with configuration status and unchecked ru
     assert.equal(code, 0);
     const out = text(io);
     assert.match(out, /Forma 状态：已安装/);
-    assert.match(out, /插件版本：0\.2\.0/);
+    assert.match(out, /插件版本：0\.2\.1/);
     assert.match(out, /配置状态：摘要一致/);
     assert.match(out, /运行状态：未检测（当前命令未连接正在运行的 DSH）/);
     assert.match(out, /插件声明 Forma 工具：3 个/);

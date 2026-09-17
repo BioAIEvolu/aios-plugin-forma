@@ -61,14 +61,14 @@ The package contains a real `aios-plugin-forma` binary. It is exercised from a
 local tarball:
 
 ```powershell
-npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma install `
+npx --yes --package .\aios-plugin-forma-0.2.1.tgz aios-plugin-forma install `
   --dsh-home <disposable-dsh-home> `
   --profile forma-test `
   --work-root <disposable-work-root> `
   --source-root <fixture-root>\m1\repo-tool-mit
-npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma inspect `
+npx --yes --package .\aios-plugin-forma-0.2.1.tgz aios-plugin-forma inspect `
   --dsh-home <disposable-dsh-home> --profile forma-test
-npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma uninstall `
+npx --yes --package .\aios-plugin-forma-0.2.1.tgz aios-plugin-forma uninstall `
   --dsh-home <disposable-dsh-home> --profile forma-test
 ```
 
@@ -149,10 +149,10 @@ are accepted — never `main`, `latest`, branch archives or any unpinned
 reference:
 
 ```powershell
-npx --yes --package .\aios-plugin-forma-0.2.0.tgz aios-plugin-forma install `
+npx --yes --package .\aios-plugin-forma-0.2.1.tgz aios-plugin-forma install `
   --dsh-home <absolute-disposable-dsh-home> --profile forma-test `
   --work-root <absolute-disposable-work-root> --source-root <absolute-source-root> `
-  --package-url https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.2.0/aios-plugin-forma-0.2.0.tgz `
+  --package-url https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.2.1/aios-plugin-forma-0.2.1.tgz `
   --sha256 <64-hex-sha256-of-the-release-asset> --max-download-bytes 52428800
 ```
 

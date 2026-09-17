@@ -14,14 +14,14 @@ function run(args) {
 }
 test('CLI help and version are side-effect free and do not pollute stderr', async () => {
   const help = await run(['--help']); assert.equal(help.code, 0); assert.match(help.stdout, /--dsh-home/); assert.match(help.stdout, /--package-url/); assert.match(help.stdout, /--json/); assert.equal(help.stderr, '');
-  const version = await run(['--version']); assert.equal(version.code, 0); assert.match(version.stdout.trim(), /^0\.2\.0$/); assert.equal(version.stderr, '');
+  const version = await run(['--version']); assert.equal(version.code, 0); assert.match(version.stdout.trim(), /^0.2.1$/); assert.equal(version.stderr, '');
   const missing = await run(['inspect', '--profile', 'forma-test']); assert.equal(missing.code, 2); assert.match(missing.stderr, /DSH_HOME_REQUIRED/); assert.match(missing.stderr, /--dsh-home/);
 });
 test('--json help and version each print exactly one stable JSON document', async () => {
   const help = await run(['--json', '--help']); assert.equal(help.code, 0); assert.equal(help.stderr, '');
-  const helpJson = JSON.parse(help.stdout); assert.equal(helpJson.schema_version, 1); assert.equal(helpJson.command, 'help'); assert.equal(helpJson.version, '0.2.0');
+  const helpJson = JSON.parse(help.stdout); assert.equal(helpJson.schema_version, 1); assert.equal(helpJson.command, 'help'); assert.equal(helpJson.version, '0.2.1');
   const version = await run(['--json', '--version']); assert.equal(version.code, 0); assert.equal(version.stderr, '');
-  assert.equal(JSON.parse(version.stdout).version, '0.2.0');
+  assert.equal(JSON.parse(version.stdout).version, '0.2.1');
 });
 test('usage errors honour human and --json modes with exit code 2', async () => {
   const unknown = await run(['frobnicate']); assert.equal(unknown.code, 2); assert.match(unknown.stderr, /UNKNOWN_COMMAND/); assert.match(unknown.stderr, /--help/); assert.equal(unknown.stdout, '');

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.1 - 2026-09-17
+
+- Fixed a release-blocking boot failure in CLI-installed profiles. The bundle
+  ships its own patch that inserts the `forma` entry; the v0.2.0 CLI added a
+  second `insert` row with the same id to the profile patch, and Cordis
+  refuses to boot with `duplicate loader entry id: forma`. The CLI now
+  appends an override patch (bare `{ id, name, config }` layer) that
+  reconfigures the bundle-provided entry in place, and reinstalling repairs
+  profiles written by v0.2.0 even when the stored config already matches.
+  `install`/`inspect`/`uninstall` accept both row shapes.
+
 ## 0.2.0 - 2026-09-16
 
 - Reworked CLI user messaging: the default output is now concise, actionable

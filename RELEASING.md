@@ -31,7 +31,7 @@ npm pack
 Compute the release asset digest:
 
 ```powershell
-(Get-FileHash .\aios-plugin-forma-0.2.0.tgz -Algorithm SHA256).Hash.ToLower()
+(Get-FileHash .\aios-plugin-forma-0.2.1.tgz -Algorithm SHA256).Hash.ToLower()
 ```
 
 Record this 64-hex value: it is the `--sha256` users must pass to the cloud
@@ -39,11 +39,11 @@ installer, and it belongs in the GitHub Release notes.
 
 ## Remaining manual step (Release asset)
 
-Tag the release commit and create the GitHub Release manually. For `v0.2.0`:
+Tag the release commit and create the GitHub Release manually. For `v0.2.1`:
 
-1. Tag the release commit as `v0.2.0` and push the tag if not already on the
+1. Tag the release commit as `v0.2.1` and push the tag if not already on the
    remote.
 2. Create a GitHub Release from the tag, attach
-   `aios-plugin-forma-0.2.0.tgz`, and paste the SHA-256 from above into the
+   `aios-plugin-forma-0.2.1.tgz`, and paste the SHA-256 from above into the
    release notes next to the pinned download URL:
-   `https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.2.0/aios-plugin-forma-0.2.0.tgz`
+   `https://github.com/BioAIEvolu/aios-plugin-forma/releases/download/v0.2.1/aios-plugin-forma-0.2.1.tgz`
